@@ -30,13 +30,11 @@ See [INSTALL.md](INSTALL.md) for the evaluation environment and installation ins
 
 To restore your own underwater images with the pretrained SandBAR model, see the [demo instructions](docs/USAGE.md#demo).
 
-## Training and Evaluation
+## Pretrained Model
 
-Training and testing instructions are provided through the links below. See [dataset preparation](docs/USAGE.md#dataset) for download links and data splits.
-
-| Task | Training Instructions | Testing Instructions | Pretrained Model |
+| Model | Checkpoint | Inference | Evaluation |
 |---|:---:|:---:|:---:|
-| Underwater image restoration | [Link](docs/USAGE.md#training) | [Link](docs/USAGE.md#evaluation) | [Download](https://github.com/YanziLiu/SandBAR/releases/download/v1.0.0/SandBAR_code_and_checkpoint.zip) |
+| SandBAR | [Download](https://github.com/YanziLiu/SandBAR/releases/download/v1.0.0/SandBAR_code_and_checkpoint.zip) | [Link](docs/USAGE.md#demo) | [Link](docs/USAGE.md#evaluation) |
 
 ## Results
 

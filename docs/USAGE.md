@@ -30,8 +30,6 @@ Download [UnderwaterBenchmarkDataset](https://www.kaggle.com/datasets/xuhangc/un
 
 ```text
 Dataset/
-  train/input/
-  train/target/
   testset(ref)/test-EUVP/input/
   testset(ref)/test-EUVP/target/
   testset(ref)/test-LSUI/input/
@@ -40,25 +38,7 @@ Dataset/
   testset(ref)/test-UIEB/target/
 ```
 
-`data/splits/` contains the exact 4,800 training filenames and the 200 EUVP, 200 LSUI and 90 UIEB test filenames. The downloadable archive contains 5,600 training pairs; the supplied training loader uses the 4,800-name list, excluding the 800 duplicate UIEB copies present in the archive. Keep filenames and extension capitalization unchanged.
-
-## Training
-
-The original training implementation and its configuration are included:
-
-```bash
-DATA_DIR=/path/to/Dataset OUT_ROOT=outputs bash scripts/train_sandbar.sh
-```
-
-This enables SPARK with dimension 32, blocks [2,4,4,6], expansion 2.66, batch size 4, Adam at 1e-4, 3 warm-up epochs, cosine decay to 1e-6, and 650 training epochs. It uses 256×256 random crops, horizontal flips, three-scale L1 + 0.1 FFT supervision, and gradient clipping at 0.01. The release verification in the [README](../README.md#results) evaluates the supplied pretrained checkpoint; it does not represent a new training run.
-
-Export a training checkpoint to the deployed graph:
-
-```bash
-python sandbar_code/tools/export_deployed.py \
-  --input /path/to/training_checkpoint.pkl \
-  --output weights/my_deployed_checkpoint.pkl
-```
+`data/splits/` contains the exact 200 EUVP, 200 LSUI and 90 UIEB test filenames used for checkpoint evaluation. Keep filenames and extension capitalization unchanged.
 
 ## Evaluation
 
