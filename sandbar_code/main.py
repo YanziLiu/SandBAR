@@ -4,6 +4,8 @@ The default architecture is the scaffold-free permanent graph. Use
 ``--post_ffn freqenh`` during training to enable SPARK in the post-attention
 slot. Use ``tools/export_deployed.py`` to strip SPARK and fold its residual
 bias for PaST deployment.
+
+Test mode uses the repository's evaluate.py and the public Dataset layout.
 """
 
 import os
@@ -11,6 +13,7 @@ import random
 import torch
 import numpy as np
 import argparse
+from pathlib import Path
 from torch.backends import cudnn
 from models.sandbar import build_net
 from train import _train
@@ -24,6 +27,9 @@ def parse_blocks(blocks):
 
 
 def main(args):
+    if args.mode == 'test':
+        return _eval(args)
+
     # Reproducibility: fix all RNG seeds. cudnn.benchmark stays True (SFNet style),
     # so this gives "same seed, similar results" rather than strict bit-equivalence.
     torch.manual_seed(args.seed)
@@ -56,23 +62,20 @@ def main(args):
     if args.mode == 'train':
         _train(model, args)
 
-    if args.mode == 'test':
-        _eval(model, args)
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--model_name', default='SandBAR', type=str)
-    parser.add_argument('--data_dir', type=str, default='../dataset/dulun_euvp_sfnet')
+    parser.add_argument('--data_dir', type=str, default='dataset/Dataset',
+                        help='Dataset root containing train/ and testset(ref)/')
     parser.add_argument('--mode', default='train', choices=['train', 'test'], type=str)
 
     # Model / ablation controls
     parser.add_argument('--model_dim', type=int, default=32)
     parser.add_argument('--model_blocks', type=str, default='2,4,4,6')
     # gated = GDFN (permanent graph); freqenh = SPARK (training scaffold);
-    # freqenh_gauss / freqenh_sym = Table 4 ablations (b) / (c);
-    # dffn = the second module in the Table 3 placement study.
+    # freqenh_gauss / freqenh_sym = Table 5 ablations (b) / (c);
+    # dffn = the second module in the Table 4 placement study.
     ffn_choices = ['gated', 'freqenh', 'freqenh_gauss', 'freqenh_sym', 'dffn']
     parser.add_argument('--pre_ffn', default='gated', choices=ffn_choices, type=str)
     parser.add_argument('--post_ffn', default='gated', choices=ffn_choices, type=str)
@@ -92,9 +95,10 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=42)
 
     # Test
-    parser.add_argument('--test_model', type=str, default='../weights/sandbar_checkpoint.pkl')
+    parser.add_argument('--test_model', type=str,
+                        default=str(Path(__file__).resolve().parents[1] / 'weights/sandbar_checkpoint.pkl'))
     parser.add_argument('--save_image', action='store_true',
-                        help='write restored images to --output_root/results/<model_name>')
+                        help='write restored PNGs to --output_root/results/<model_name>/<domain>')
     parser.add_argument('--output_root', type=str, default='')
 
     args = parser.parse_args()

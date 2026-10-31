@@ -6,7 +6,7 @@ Yanzi Liu, Haoran Hou<sup>†</sup>, Jiachi Tong<sup>†</sup>, Shen Chen<sup>�
 
 [![Paper](https://img.shields.io/badge/Paper-PDF-blue)](papers/2026411507.pdf)
 [![Supplementary](https://img.shields.io/badge/Supplementary-Material-red)](papers/01450_supp.pdf)
-[![Models](https://img.shields.io/badge/Pretrained-Model-green)](https://github.com/YanziLiu/SandBAR/releases/tag/v1.0.0)
+[![Models](https://img.shields.io/badge/Pretrained-Model-green)](https://github.com/YanziLiu/SandBAR/releases/tag/v1.0.1)
 
 ![Visual comparison from the paper](assets/qualitative.png)
 
@@ -34,7 +34,7 @@ To restore your own underwater images with the pretrained SandBAR model, see the
 
 | Model | Checkpoint | Inference | Evaluation |
 |---|:---:|:---:|:---:|
-| SandBAR | [Download](https://github.com/YanziLiu/SandBAR/releases/download/v1.0.0/SandBAR_code_and_checkpoint.zip) | [Link](docs/USAGE.md#demo) | [Link](docs/USAGE.md#evaluation) |
+| SandBAR | [Download](https://github.com/YanziLiu/SandBAR/releases/download/v1.0.1/SandBAR_code_and_checkpoint.zip) | [Link](docs/USAGE.md#demo) | [Link](docs/USAGE.md#evaluation) |
 
 ## Results
 

@@ -11,7 +11,7 @@ import torch
 from PIL import features
 from skimage.metrics import peak_signal_noise_ratio, structural_similarity
 
-from inference import ROOT, DEFAULT_WEIGHT, load_model, read_image, restore
+from inference import ROOT, DEFAULT_WEIGHT, load_model, read_image, restore, save_image
 
 
 def main():
@@ -21,6 +21,8 @@ def main():
     parser.add_argument("--checkpoint", type=Path, default=DEFAULT_WEIGHT)
     parser.add_argument("--output", type=Path, default=Path("results/evaluation"))
     parser.add_argument("--device", default="cuda", choices=["cuda", "cpu"])
+    parser.add_argument("--save-images", action="store_true",
+                        help="Save restored PNGs under the output directory for each domain")
     args = parser.parse_args()
     if features.version_codec("jpg") != "9.0":
         raise RuntimeError("Paper evaluation requires IJG libjpeg 9. Use environment.yml; pip Pillow wheels use a different JPEG decoder.")
@@ -36,15 +38,20 @@ def main():
             names = (ROOT / "data/splits" / f"{domain}.txt").read_text().splitlines()
             base = args.data_root / "testset(ref)" / f"test-{domain}"
             target_dir = base / "target"
+            if args.save_images:
+                (args.output / domain).mkdir(parents=True, exist_ok=True)
             scores = []
             for index, name in enumerate(names, 1):
                 image = read_image(base / "input" / name)
                 target = read_image(target_dir / name)[0].numpy()
-                prediction = restore(model, image, args.device)[0].numpy()
+                restored = restore(model, image, args.device)
+                prediction = restored[0].numpy()
                 psnr = float(peak_signal_noise_ratio(target, prediction, data_range=1))
                 ssim = float(structural_similarity(target, prediction, data_range=1, channel_axis=0))
                 scores.append((psnr, ssim))
                 writer.writerow(dict(domain=domain, filename=name, psnr=psnr, ssim=ssim))
+                if args.save_images:
+                    save_image(restored, args.output / domain / (Path(name).stem + ".png"))
                 if index % 50 == 0 or index == len(names):
                     handle.flush()
                     print(f"{domain} {index}/{len(names)}", flush=True)

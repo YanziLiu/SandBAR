@@ -191,7 +191,7 @@ class FreqEnhGaussFFN(nn.Module):
     """SPARK with the content-adaptive splitter replaced by a FIXED Gaussian
     low-pass -- the splitter-provenance control.
 
-    Ablation (b) of Table 4. Everything downstream of the split --
+    Ablation (b) of Table 5. Everything downstream of the split --
     asymmetric branches, SFconv fusion, residual, GDFN -- is identical to
     FreqEnhFFN, so the comparison isolates the content-adaptive splitter. The
     fixed split removes the dynamic filter's kernel-predictor (conv+bn, ~2.4K
@@ -506,7 +506,7 @@ class SandBAR(nn.Module):
         super(SandBAR, self).__init__()
 
         # Low-frequency guidance path. use_lf_guidance=False ablates the whole
-        # path (extractor + SCMs + FAMs) for ablation (d) of Table 4.
+        # path (extractor + SCMs + FAMs) for ablation (d) of Table 5.
         self.use_lf_guidance = use_lf_guidance
         if use_lf_guidance:
             self.lf_extractor = LowFreqExtractor(kernel_size=lf_kernel_size, init_sigma=lf_init_sigma)
