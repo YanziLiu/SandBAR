@@ -8,15 +8,13 @@ Yanzi Liu, Haoran Hou<sup>†</sup>, Jiachi Tong<sup>†</sup>, Shen Chen<sup>�
 [![Supplementary](https://img.shields.io/badge/Supplementary-Material-red)](papers/01450_supp.pdf)
 [![Models](https://img.shields.io/badge/Pretrained-Model-green)](#pretrained-model)
 
+![Visual comparison from the paper](assets/qualitative.png)
+
+*Figure 4. Visual comparison from the paper.*
+
 #### News
 
 - SandBAR has been accepted to **WACV 2027**! 🎉
-
-<hr />
-
-> **Abstract:** *Reliable underwater imagery supports marine monitoring, ecological assessment and autonomous exploration, yet light scattering, absorption and turbidity jointly degrade image clarity, distort colour and suppress fine structure. Although these effects are physically interwoven, they commonly appear as complementary frequency tendencies: large-scale, channel-dependent appearance distortions and local high-frequency detail loss. We refer to this tendency as band asymmetry; it motivates different forms of restoration for global colour and local structure. Our primary contribution is SandBAR, a novel unified band-asymmetric architecture for underwater image restoration. Rather than treating frequency processing as an isolated module, SandBAR organises the restoration pipeline around band asymmetry at the block, encoder and objective levels. Within this architecture, we introduce a novel band-asymmetric sandwich block with a reserved post-attention repair slot and the Split-band Parallel Asymmetric Repair Kernel (SPARK), a novel module that applies channel-aware large-support correction to the low band, which predominantly carries large-scale appearance distortions, and lightweight local refinement to the detail-bearing high band, thereby restoring global colour while preserving fine structure. To deliver the global cast to the depth at which the network represents global structure, a learnable low-frequency guidance path injects a low-pass view of the input into the deep encoder, and a three-scale spatial-frequency objective supervises the same axis throughout the decoder. Building on the reserved post-attention slot, we further introduce Post-attention Scaffold Training (PaST), a novel removable nonlinear scaffolding scheme that trains the permanent SandBAR graph under band-specific capacity and runs it at inference without that capacity. SandBAR reaches 29.89 / 28.92 / 22.77 dB on EUVP / LSUI / UIEB and establishes a new three-domain mean state of the art on the benchmark family, exceeding the strongest published result by approximately 1.0 dB. PaST adds no parameters or FLOPs at inference and preserves matched latency.*
-
-<hr />
 
 ## Network Architecture
 
@@ -130,13 +128,6 @@ Per-image measurements and runtime details are included in [results/reproduced/]
 
 </details>
 
-<details>
-<summary><strong>Visual comparison</strong> (click to expand)</summary>
-
-![Visual comparison from the paper](assets/qualitative.png)
-
-</details>
-
 ## Citation
 
 If you use SandBAR in your research, please cite:
@@ -153,7 +144,7 @@ If you use SandBAR in your research, please cite:
 
 ## Contact
 
-For questions, please contact [Yanzi Liu](mailto:yanzi.liu@kcl.ac.uk) or [Shuang Chen](mailto:shuang.chen@durham.ac.uk).
+For questions, please contact [Yanzi Liu](mailto:yanzi.liu@kcl.ac.uk).
 
 **Acknowledgment:** The implementation includes components adapted from HINT and SFNet. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for attribution.
 
