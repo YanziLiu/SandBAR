@@ -1,0 +1,9 @@
+# Use environment.yml for the paper's JPEG decoder (IJG libjpeg 9).
+# Install these packages inside that conda environment; do not replace its Pillow.
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128
+numpy==2.4.2
+scikit-image==0.26.0
+einops==0.8.2
+tensorboard==2.20.0
